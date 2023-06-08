@@ -13,6 +13,7 @@ export const MenuImg = styled.img`
 
   background-size: cover;
   background-position: center;
+  border-radius: 10px;
 `;
 
 export const MenuLabel = styled.span`
