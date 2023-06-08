@@ -69,8 +69,8 @@ function App() {
   };
 
   const handleRemoveButtonClick = id => {
-    const updatedCart = cart.filter(item => item._id !== id);
-    setCart([...updatedCart]);
+    const updatedCart = cart.products.filter(item => item._id !== id);
+    setCart({ ...cart, products: [...updatedCart] });
   };
 
   const onOrderSubmit = () => {
