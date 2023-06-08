@@ -10,3 +10,8 @@ export const getShopsList = async () => {
     console.log(error);
   }
 };
+
+export const addOrder = async order => {
+  const response = await axios.post('/orders', order);
+  return response;
+};
