@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useLoadScript } from '@react-google-maps/api';
 import toast from 'react-hot-toast';
 import { addOrder } from '../../services/api';
 import { Box } from '../../components/common/Box';
 import { CartList } from '../../components/CartList/CartList';
+import { Map } from '../../components/common/Map/Map';
 import { Form } from '../../components/Form/Form';
 import { Button } from '../../components/common/Button/Button';
 
@@ -13,9 +15,16 @@ const initialValue = {
   address: '',
 };
 
-const Cart = ({ cart, onOrderSubmit, ...props }) => {
+const apiKey = 'AIzaSyBAVLyWL1X9FGgGURjhvdBVxtBHtiJPD1Q';
+
+const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
   const [formData, setFormData] = useState(initialValue);
   const { products, shopId } = cart;
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: apiKey,
+    libraries: ['places'],
+  });
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -68,6 +77,7 @@ const Cart = ({ cart, onOrderSubmit, ...props }) => {
     <>
       <Box display="grid" gridGap={4} gridTemplateColumns="4fr 6fr" flex={1}>
         <Box px={4} py={3} borderRadius={10} border="1px solid grey">
+          {isLoaded && <Map address={activeShopAddress} />}
           <Form formData={formData} handleChange={handleChange} />
         </Box>
         <Box px={4} py={3} borderRadius={10} border="1px solid grey">
