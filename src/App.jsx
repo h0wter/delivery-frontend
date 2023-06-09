@@ -1,11 +1,13 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { GlobalStyle } from './components/common/GlobalStyle';
 import { Layout } from './components/common/Layout';
+import { getShopsList } from './services/api';
 
 const ShopsPage = lazy(() => import('./pages/Shops/Shops'));
 const CartPage = lazy(() => import('./pages/Cart/Cart'));
+const MapPage = lazy(() => import('./pages/Map'));
 
 const initialState = {
   shopId: null,
@@ -14,7 +16,18 @@ const initialState = {
 
 function App() {
   const [cart, setCart] = useState(initialState);
+  const [shopsList, setShopsList] = useState([]);
   const [selectedShopId, setSelectedShopId] = useState(null);
+
+  const activeShopAddress = useMemo(() => {
+    return shopsList.reduce((address, shop) => {
+      return shop._id === selectedShopId ? shop.address : address;
+    }, null);
+  }, [shopsList, selectedShopId]);
+
+  useEffect(() => {
+    getShopsList().then(result => setShopsList([...result]));
+  }, []);
 
   useEffect(() => {
     const cart = localStorage.getItem('myCart');
@@ -84,6 +97,7 @@ function App() {
             index
             element={
               <ShopsPage
+                shopsList={shopsList}
                 addToCart={handleAddToCart}
                 isCartEmpty={cart.products.length === 0}
                 selectedShopId={selectedShopId}
@@ -96,12 +110,14 @@ function App() {
             element={
               <CartPage
                 cart={cart}
+                activeShopAddress={activeShopAddress}
                 onOrderSubmit={onOrderSubmit}
                 handleQuantityChange={handleQuantityChange}
                 handleRemoveButtonClick={handleRemoveButtonClick}
               />
             }
           />
+          <Route path="/map" element={<MapPage />} />
         </Route>
       </Routes>
       <Toaster position="bottom-center" />

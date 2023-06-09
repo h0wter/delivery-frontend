@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { getShopsList } from '../../services/api';
 import { Box } from '../../components/common/Box';
 import { Modal } from '../../components/Modal/Modal';
 import { Button } from '../../components/common/Button/Button';
@@ -8,19 +7,15 @@ import { ShopMenu } from '../../components/ShopMenu/ShopMenu';
 import { StyledModal } from './Shops.styled';
 
 const Shops = ({
+  shopsList,
   addToCart,
   isCartEmpty,
   selectedShopId,
   handleShopSwitch,
 }) => {
-  const [shopsList, setShopsList] = useState([]);
   const [newSelectedShopId, setNewSelectedShopId] = useState(null);
   const [selectedShopMenu, setSelectedShopMenu] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    getShopsList().then(result => setShopsList([...result]));
-  }, []);
 
   useEffect(() => {
     const result = shopsList.filter(shop => shop._id === selectedShopId);
