@@ -1,7 +1,13 @@
 import toast from 'react-hot-toast';
 import { Box } from '../common/Box';
 import { Button } from '../common/Button/Button';
-import { MenuItem, MenuImg, MenuLabel, MenuPrice } from './ShopMenu.styled';
+import {
+  StyledList,
+  MenuItem,
+  MenuImg,
+  MenuLabel,
+  MenuPrice,
+} from './ShopMenu.styled';
 
 export const ShopMenu = ({ menu, addToCart }) => {
   const handleAddButtonClick = item => {
@@ -10,7 +16,7 @@ export const ShopMenu = ({ menu, addToCart }) => {
   };
 
   return (
-    <Box as="ul" display="grid" gridGap={4} gridTemplateColumns="1fr 1fr">
+    <StyledList>
       {menu.products.map(item => (
         <MenuItem key={item._id}>
           <MenuImg src={item.pictureUrl} alt={item.name} />
@@ -25,6 +31,6 @@ export const ShopMenu = ({ menu, addToCart }) => {
           </Box>
         </MenuItem>
       ))}
-    </Box>
+    </StyledList>
   );
 };
