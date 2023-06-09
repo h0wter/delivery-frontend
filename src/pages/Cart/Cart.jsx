@@ -21,7 +21,6 @@ const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
   const [formData, setFormData] = useState(initialValue);
   const [userAddress, setUserAddress] = useState(null);
   const [duration, setDuration] = useState(null);
-  console.log('DURATION', typeof duration);
   const { products, shopId } = cart;
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
@@ -69,6 +68,10 @@ const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
     }
   };
 
+  const handleAddressPick = address => {
+    setFormData({ ...formData, address });
+  };
+
   const totalPrice = Number(
     products
       .reduce((acc, { price, quantity }) => acc + price * quantity, 0)
@@ -80,11 +83,12 @@ const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
       <Box display="grid" gridGap={4} gridTemplateColumns="4fr 6fr" flex={1}>
         <Box px={4} py={3} borderRadius={10} border="1px solid grey">
           {isLoaded && activeShopAddress && (
-            <Box mb={2}>
+            <Box display="flex" justifyContent="center" mb={2}>
               <Map
                 address={activeShopAddress}
                 userAddress={userAddress}
                 setDuration={setDuration}
+                handleAddressPick={handleAddressPick}
               />
             </Box>
           )}
