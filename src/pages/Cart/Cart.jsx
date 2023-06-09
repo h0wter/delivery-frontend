@@ -19,8 +19,10 @@ const apiKey = 'AIzaSyBAVLyWL1X9FGgGURjhvdBVxtBHtiJPD1Q';
 
 const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
   const [formData, setFormData] = useState(initialValue);
+  const [userAddress, setUserAddress] = useState(null);
+  const [duration, setDuration] = useState(null);
+  console.log('DURATION', typeof duration);
   const { products, shopId } = cart;
-
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
     libraries: ['places'],
@@ -77,8 +79,27 @@ const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
     <>
       <Box display="grid" gridGap={4} gridTemplateColumns="4fr 6fr" flex={1}>
         <Box px={4} py={3} borderRadius={10} border="1px solid grey">
-          {isLoaded && <Map address={activeShopAddress} />}
+          {isLoaded && activeShopAddress && (
+            <Box mb={2}>
+              <Map
+                address={activeShopAddress}
+                userAddress={userAddress}
+                setDuration={setDuration}
+              />
+            </Box>
+          )}
+          {duration && (
+            <Box as="p" mb={2} textAlign="center">
+              Estimated delivery time: {duration}.
+            </Box>
+          )}
           <Form formData={formData} handleChange={handleChange} />
+          <Button
+            type="button"
+            onClick={() => setUserAddress(formData.address)}
+          >
+            Plan a route
+          </Button>
         </Box>
         <Box px={4} py={3} borderRadius={10} border="1px solid grey">
           {products.length > 0 && <CartList cart={products} {...props} />}
