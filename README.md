@@ -34,11 +34,11 @@ catering to your every need.
 
 ### Shops page
 
-<img src"./src/assets/Shops-page.png">
+<img src="./src/assets/Shops-page.png">
 
 ### Cart page
 
-<img src"./src/assets/Cart-page.png">
+<img src="./src/assets/Cart-page.png">
 
 ## Authors
 
