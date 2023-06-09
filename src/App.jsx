@@ -7,7 +7,6 @@ import { getShopsList } from './services/api';
 
 const ShopsPage = lazy(() => import('./pages/Shops/Shops'));
 const CartPage = lazy(() => import('./pages/Cart/Cart'));
-const MapPage = lazy(() => import('./pages/Map'));
 
 const initialState = {
   shopId: null,
@@ -117,7 +116,6 @@ function App() {
               />
             }
           />
-          <Route path="/map" element={<MapPage />} />
         </Route>
       </Routes>
       <Toaster position="bottom-center" />
