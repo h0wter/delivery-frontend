@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-export const StyledList = styled.li`
+export const StyledItem = styled.li`
   display: flex;
+  justify-content: center;
   padding: 16px 32px;
   border-radius: 10px;
   border: 1px solid grey;
