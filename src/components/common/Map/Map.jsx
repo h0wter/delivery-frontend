@@ -6,21 +6,32 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api';
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
+import { getAddressFromCoordinates } from '../../../services/api';
 
-export const Map = ({ address, userAddress, setDuration }) => {
+export const Map = ({
+  address,
+  userAddress,
+  setDuration,
+  handleAddressPick,
+}) => {
   const [coordinates, setCoordinates] = useState(null);
   const [userCoordinates, setUserCoordinates] = useState(null);
   const [directions, setDirections] = useState(null);
   const mapRef = useRef();
   const onLoad = useCallback(map => (mapRef.current = map), []);
 
-  const handleMapClick = event => {
+  const handleMapClick = async event => {
     const newMarker = {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
     };
+    const newAddress = await getAddressFromCoordinates(
+      newMarker.lat,
+      newMarker.lng
+    );
 
-    setUserCoordinates(newMarker);
+    setUserCoordinates({ ...newMarker });
+    handleAddressPick(newAddress);
   };
 
   useEffect(() => {
@@ -60,7 +71,9 @@ export const Map = ({ address, userAddress, setDuration }) => {
         }}
         onClick={event => handleMapClick(event)}
       >
-        {coordinates && <Marker position={coordinates} title={address} />}
+        {coordinates && !userCoordinates && (
+          <Marker position={coordinates} title={address} />
+        )}
         {coordinates && userCoordinates && (
           <DirectionsService
             options={{
