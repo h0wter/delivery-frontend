@@ -1,6 +1,6 @@
 import { Box } from '../common/Box';
 import { Button } from '../common/Button/Button';
-import { CartImg, StyledInput, StyledList } from './CartList.styled';
+import { CartImg, StyledInput, StyledItem } from './CartList.styled';
 
 export const CartList = ({
   cart,
@@ -11,13 +11,13 @@ export const CartList = ({
     <>
       <ul>
         {cart.map(({ _id, name, pictureUrl, price, quantity }) => (
-          <StyledList key={_id}>
+          <StyledItem key={_id}>
             <CartImg src={pictureUrl} alt={name} />
             <Box
               display="flex"
               flexDirection="column"
               justifyContent="center"
-              width="100%"
+              maxWidth="220px"
               textAlign="center"
             >
               <p>{name}</p>
@@ -43,7 +43,7 @@ export const CartList = ({
                 Remove
               </Button>
             </Box>
-          </StyledList>
+          </StyledItem>
         ))}
       </ul>
     </>
