@@ -46,7 +46,15 @@ const Shops = ({
             />
           )}
         </Box>
-        <Box px={4} py={3} borderRadius={10} border="1px solid grey">
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          px={4}
+          py={3}
+          borderRadius={10}
+          border="1px solid grey"
+        >
           {selectedShopMenu && (
             <ShopMenu
               menu={selectedShopMenu}
