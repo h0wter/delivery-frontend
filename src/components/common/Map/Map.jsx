@@ -15,9 +15,8 @@ export const Map = ({
   handleAddressPick,
 }) => {
   const [coordinates, setCoordinates] = useState(null);
-  const [userCoordinates, setUserCoordinates] = useState(null);
-  const [directions, setDirections] = useState(null);
   const [directionsOptions, setDirectionsOptions] = useState(null);
+  const [directions, setDirections] = useState(null);
   const mapRef = useRef();
   const onLoad = useCallback(map => (mapRef.current = map), []);
 
@@ -31,7 +30,6 @@ export const Map = ({
       newMarker.lng
     );
 
-    setUserCoordinates({ ...newMarker });
     setDirectionsOptions({
       destination: newMarker,
       origin: coordinates,
@@ -58,12 +56,17 @@ export const Map = ({
         const result = await getGeocode({
           address: userAddress,
         });
-        const coordinates = await getLatLng(result[0]);
-        setUserCoordinates(coordinates);
+        const userCoordinates = await getLatLng(result[0]);
+        setDirectionsOptions({
+          destination: userCoordinates,
+          origin: coordinates,
+          travelMode: 'DRIVING',
+          language: 'en',
+        });
       };
       fetchCoordinates();
     }
-  }, [userAddress]);
+  }, [userAddress, coordinates]);
 
   useEffect(() => {
     if (directionsOptions) {
@@ -93,26 +96,8 @@ export const Map = ({
         }}
         onClick={event => handleMapClick(event)}
       >
-        {coordinates && !userCoordinates && (
+        {coordinates && !directions && (
           <Marker position={coordinates} title={address} />
-        )}
-        {coordinates && userCoordinates && !directions && (
-          <DirectionsService
-            options={{
-              destination: userCoordinates,
-              origin: coordinates,
-              travelMode: 'DRIVING',
-              language: 'en',
-            }}
-            callback={(result, status) => {
-              if (status === 'OK') {
-                setDirections(result);
-                const route = result.routes[0];
-                const leg = route.legs[0];
-                setDuration(leg.duration.text);
-              }
-            }}
-          />
         )}
         {directions && (
           <DirectionsRenderer
