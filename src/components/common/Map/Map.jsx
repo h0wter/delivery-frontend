@@ -17,10 +17,12 @@ export const Map = ({
   const [coordinates, setCoordinates] = useState(null);
   const [userCoordinates, setUserCoordinates] = useState(null);
   const [directions, setDirections] = useState(null);
+  const [showDirectionsService, setShowDirectionsService] = useState(false);
   const mapRef = useRef();
   const onLoad = useCallback(map => (mapRef.current = map), []);
 
   const handleMapClick = async event => {
+    setShowDirectionsService(true);
     const newMarker = {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
@@ -61,20 +63,21 @@ export const Map = ({
   return (
     <>
       <GoogleMap
-        mapContainerStyle={{ width: '400px', height: '400px' }}
+        mapContainerStyle={{ width: '100%', height: '400px' }}
         center={coordinates}
         zoom={8}
         onLoad={onLoad}
         options={{
           disableDefaultUI: true,
           clickableIcons: false,
+          gestureHandling: 'greedy',
         }}
         onClick={event => handleMapClick(event)}
       >
         {coordinates && !userCoordinates && (
           <Marker position={coordinates} title={address} />
         )}
-        {coordinates && userCoordinates && (
+        {coordinates && userCoordinates && showDirectionsService && (
           <DirectionsService
             options={{
               destination: userCoordinates,
@@ -88,6 +91,7 @@ export const Map = ({
                 const route = result.routes[0];
                 const leg = route.legs[0];
                 setDuration(leg.duration.text);
+                setShowDirectionsService(false);
               }
             }}
           />
