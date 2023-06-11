@@ -32,7 +32,6 @@ function App() {
     const cart = localStorage.getItem('myCart');
     const parsedCart = JSON.parse(cart);
     if (parsedCart) {
-      console.log(parsedCart);
       setSelectedShopId(parsedCart.shopId);
       setCart({ ...parsedCart });
     }

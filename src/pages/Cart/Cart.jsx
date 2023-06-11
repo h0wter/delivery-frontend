@@ -24,7 +24,6 @@ const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
   const { products, shopId } = cart;
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
-    libraries: ['places'],
   });
 
   const handleChange = e => {
