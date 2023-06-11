@@ -17,12 +17,11 @@ export const Map = ({
   const [coordinates, setCoordinates] = useState(null);
   const [userCoordinates, setUserCoordinates] = useState(null);
   const [directions, setDirections] = useState(null);
-  const [showDirectionsService, setShowDirectionsService] = useState(false);
+  const [directionsOptions, setDirectionsOptions] = useState(null);
   const mapRef = useRef();
   const onLoad = useCallback(map => (mapRef.current = map), []);
 
   const handleMapClick = async event => {
-    setShowDirectionsService(true);
     const newMarker = {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
@@ -33,6 +32,12 @@ export const Map = ({
     );
 
     setUserCoordinates({ ...newMarker });
+    setDirectionsOptions({
+      destination: newMarker,
+      origin: coordinates,
+      travelMode: 'DRIVING',
+      language: 'en',
+    });
     handleAddressPick(newAddress);
   };
 
@@ -60,6 +65,20 @@ export const Map = ({
     }
   }, [userAddress]);
 
+  useEffect(() => {
+    if (directionsOptions) {
+      const directionsService = new window.google.maps.DirectionsService();
+      directionsService.route(directionsOptions, (result, status) => {
+        if (status === 'OK') {
+          setDirections(result);
+          const route = result.routes[0];
+          const leg = route.legs[0];
+          setDuration(leg.duration.text);
+        }
+      });
+    }
+  }, [directionsOptions, setDuration]);
+
   return (
     <>
       <GoogleMap
@@ -77,7 +96,7 @@ export const Map = ({
         {coordinates && !userCoordinates && (
           <Marker position={coordinates} title={address} />
         )}
-        {coordinates && userCoordinates && showDirectionsService && (
+        {coordinates && userCoordinates && !directions && (
           <DirectionsService
             options={{
               destination: userCoordinates,
@@ -91,7 +110,6 @@ export const Map = ({
                 const route = result.routes[0];
                 const leg = route.legs[0];
                 setDuration(leg.duration.text);
-                setShowDirectionsService(false);
               }
             }}
           />
