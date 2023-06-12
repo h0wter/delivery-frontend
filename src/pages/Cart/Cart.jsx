@@ -21,7 +21,7 @@ const initialValue = {
   address: '',
 };
 
-const apiKey = 'AIzaSyBAVLyWL1X9FGgGURjhvdBVxtBHtiJPD1Q';
+const { VITE_GOOGLE_API_KEY } = import.meta.env;
 
 const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
   const [formData, setFormData] = useState(initialValue);
@@ -29,7 +29,7 @@ const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
   const [duration, setDuration] = useState(null);
   const { products, shopId } = cart;
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: apiKey,
+    googleMapsApiKey: VITE_GOOGLE_API_KEY,
   });
 
   const handleChange = e => {
