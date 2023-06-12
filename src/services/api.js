@@ -1,6 +1,7 @@
+const { VITE_API_URL, VITE_GOOGLE_API_KEY } = import.meta.env;
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://delivery-app-zkhg.onrender.com/api';
+axios.defaults.baseURL = VITE_API_URL;
 
 export const getShopsList = async () => {
   try {
@@ -19,7 +20,7 @@ export const addOrder = async order => {
 export const getAddressFromCoordinates = async (lat, lng) => {
   try {
     const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBAVLyWL1X9FGgGURjhvdBVxtBHtiJPD1Q&language=en`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${VITE_GOOGLE_API_KEY}&language=en`
     );
 
     if (response.data.results.length > 0) {
