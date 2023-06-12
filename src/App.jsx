@@ -12,7 +12,8 @@ const initialState = {
   shopId: null,
   products: [],
 };
-
+const { VITE_API_KEY } = import.meta.env;
+console.log(VITE_API_KEY);
 function App() {
   const [cart, setCart] = useState(initialState);
   const [shopsList, setShopsList] = useState([]);
