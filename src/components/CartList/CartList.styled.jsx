@@ -22,6 +22,22 @@ export const CartImg = styled.img`
   border-radius: 10px;
 `;
 
+export const ItemInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 220px;
+  text-align: center;
+`;
+
+export const ItemPriceWrapper = styled.div`
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: 1fr 1fr;
+  align-items: baseline;
+  margin: 16px 0;
+`;
+
 export const StyledInput = styled.input`
   width: 100%;
   padding: 5px;

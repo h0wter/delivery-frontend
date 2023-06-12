@@ -4,7 +4,12 @@ import { Modal } from '../../components/Modal/Modal';
 import { Button } from '../../components/common/Button/Button';
 import { ShopsList } from '../../components/ShopList/ShopsList';
 import { ShopMenu } from '../../components/ShopMenu/ShopMenu';
-import { StyledModal } from './Shops.styled';
+import {
+  Container,
+  ShopMenuContainer,
+  ShopsListContainer,
+  StyledModal,
+} from './Shops.styled';
 
 const Shops = ({
   shopsList,
@@ -33,8 +38,8 @@ const Shops = ({
 
   return (
     <>
-      <Box display="grid" gridGap={4} gridTemplateColumns="3fr 7fr" flex={1}>
-        <Box px={4} py={3} borderRadius={10} border="1px solid grey">
+      <Container>
+        <ShopsListContainer>
           <Box as="p" mb={3} textAlign="center">
             Shops:
           </Box>
@@ -45,16 +50,8 @@ const Shops = ({
               handleShopSelect={handleShopSelect}
             />
           )}
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          px={4}
-          py={3}
-          borderRadius={10}
-          border="1px solid grey"
-        >
+        </ShopsListContainer>
+        <ShopMenuContainer>
           {selectedShopMenu && (
             <ShopMenu
               menu={selectedShopMenu}
@@ -63,8 +60,8 @@ const Shops = ({
               }}
             />
           )}
-        </Box>
-      </Box>
+        </ShopMenuContainer>
+      </Container>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <StyledModal>

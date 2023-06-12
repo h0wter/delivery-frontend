@@ -7,6 +7,12 @@ import { CartList } from '../../components/CartList/CartList';
 import { Map } from '../../components/common/Map/Map';
 import { Form } from '../../components/Form/Form';
 import { Button } from '../../components/common/Button/Button';
+import {
+  CartItemContainer,
+  Container,
+  OrderFormContainer,
+  OrderSubmitWrapper,
+} from './Cart.styled';
 
 const initialValue = {
   name: '',
@@ -79,8 +85,8 @@ const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
 
   return (
     <>
-      <Box display="grid" gridGap={4} gridTemplateColumns="4fr 6fr" flex={1}>
-        <Box px={4} py={3} borderRadius={10} border="1px solid grey">
+      <Container>
+        <OrderFormContainer>
           {isLoaded && activeShopAddress && (
             <Box display="flex" justifyContent="center" mb={2}>
               <Map
@@ -103,17 +109,17 @@ const Cart = ({ cart, activeShopAddress, onOrderSubmit, ...props }) => {
           >
             Plan a route
           </Button>
-        </Box>
-        <Box px={4} py={3} borderRadius={10} border="1px solid grey">
+        </OrderFormContainer>
+        <CartItemContainer>
           {products.length > 0 && <CartList cart={products} {...props} />}
-        </Box>
-      </Box>
-      <Box mt={3} ml="auto" display="flex" alignItems="baseline" gridGap={3}>
+        </CartItemContainer>
+      </Container>
+      <OrderSubmitWrapper>
         <p>Total price: {totalPrice}$</p>
         <Button type="button" onClick={handleSubmit}>
           Submit
         </Button>
-      </Box>
+      </OrderSubmitWrapper>
     </>
   );
 };
