@@ -7,13 +7,13 @@ import { getShopsList } from './services/api';
 
 const ShopsPage = lazy(() => import('./pages/Shops/Shops'));
 const CartPage = lazy(() => import('./pages/Cart/Cart'));
+const HistoryPage = lazy(() => import('./pages/History/History'));
 
 const initialState = {
   shopId: null,
   products: [],
 };
-const { VITE_API_KEY } = import.meta.env;
-console.log(VITE_API_KEY);
+
 function App() {
   const [cart, setCart] = useState(initialState);
   const [shopsList, setShopsList] = useState([]);
@@ -116,6 +116,7 @@ function App() {
               />
             }
           />
+          <Route path="/history" element={<HistoryPage />} />
         </Route>
       </Routes>
       <Toaster position="bottom-center" />
