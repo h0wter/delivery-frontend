@@ -12,6 +12,9 @@ export const Navigation = () => {
         <NavItem>
           <NavLink to="/cart">Shopping Cart</NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink to="/history">History</NavLink>
+        </NavItem>
       </Box>
     </Box>
   );
