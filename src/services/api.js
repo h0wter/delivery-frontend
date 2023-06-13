@@ -17,6 +17,11 @@ export const addOrder = async order => {
   return response;
 };
 
+export const getHistory = async ({ email, phone }) => {
+  const response = await axios.get(`/history?email=${email}&phone=${phone}`);
+  return response;
+};
+
 export const getAddressFromCoordinates = async (lat, lng) => {
   try {
     const response = await axios.get(
