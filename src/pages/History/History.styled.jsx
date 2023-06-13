@@ -65,18 +65,28 @@ export const StyledItem = styled.li`
 `;
 
 export const ProductsList = styled.ul`
-  display: grid;
-  width: 100%;
-  grid-gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 `;
 
 export const ProductItem = styled.li`
   display: flex;
-  max-width: 580px;
   padding: 16px 16px;
   border-radius: 10px;
   border: 1px solid grey;
+  flex: 0 0 calc((100%) / 3 - 16px);
+  max-width: 580px;
+  min-width: 500px;
+
+  @media (max-width: 1200px) {
+    flex: 0 0 calc((100%) / 2 - 16px);
+    min-width: 395px;
+  }
+
+  @media (max-width: 768px) {
+    flex: 0 0 100%;
+  }
 `;
 
 export const ItemInfo = styled.div`
