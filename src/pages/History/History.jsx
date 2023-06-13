@@ -69,7 +69,7 @@ const History = () => {
                 <Box
                   display="flex"
                   alignItems="center"
-                  justifyContent="center"
+                  textAlign="center"
                   width="200px"
                 >
                   Total price: {totalPrice}
