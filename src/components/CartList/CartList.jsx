@@ -1,4 +1,3 @@
-import { Box } from '../common/Box';
 import { Button } from '../common/Button/Button';
 import {
   CartImg,
