@@ -1,7 +1,5 @@
 # Delivery App ([Frontend](https://github.com/h0wter/delivery-frontend) and [Backend](https://github.com/h0wter/delivery-backend) )
 
-### Important❗ The backend is placed on render, the server shuts down after inactivity. After a new request, it needs about a minute to resume work.
-
 ## Application Description:
 
 Introducing a seamless and convenient food ordering service that revolutionizes
